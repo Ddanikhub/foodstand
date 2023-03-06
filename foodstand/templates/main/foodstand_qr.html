@@ -1,0 +1,34 @@
+{% extends "main/base.html" %}
+{% block title %}
+    Update Location
+{% endblock title %}
+{% block content %}
+{% load static i18n %}
+    <main class="flex-shrink-0 mt-n3">
+        <div class="container">
+            <img src="{{ qr.url }}" alt="FoodStand QR Code">
+    <p>Scan the QR code to update the location of {{ qr.content }}.</p>
+    <button onclick="scanQR()">Scan QR Code</button>
+
+    <script>
+    function scanQR() {
+        navigator.mediaDevices.getUserMedia({video: {facingMode: "environment"}})
+            .then(function(stream) {
+                var video = document.createElement('video');
+                video.srcObject = stream;
+                video.setAttribute('playsinline', '');
+                video.play();
+                video.addEventListener('scan', function(event) {
+                    var lat = event.detail.coordinates.latitude;
+                    var lng = event.detail.coordinates.longitude;
+                    window.location.href = "{% url 'qr-scan' pk=foodstand.pk %}?lat=" + lat + "&lng=" + lng;
+                });
+            })
+            .catch(function(error) {
+                console.error(error);
+            });
+    }
+    </script>
+        </div>
+    </main>
+{% endblock content %}

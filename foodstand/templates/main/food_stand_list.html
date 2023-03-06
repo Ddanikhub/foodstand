@@ -1,0 +1,71 @@
+{% extends "main/base.html" %}
+{% load static i18n %}
+{% block title %}
+    {% if category %}
+        {{ category.name }}
+    {% else %}
+        Food Stands
+    {% endif %}
+{% endblock title %}
+{% block content %}
+    <main class="flex-shrink-0 mt-n3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                {% for name, url in breadcrumb %}
+                    <li class="breadcrumb-item {% if forloop.last %}active{% endif %}">
+                        {% if not forloop.last %}
+                            <a href="{{ url }}">{{ name }}</a>
+                        {% else %}
+                            {{ name }}
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ol>
+        </nav>
+        <h2>Food Stand List by</h2>
+        <div class="row">
+            <div class="col-md-2">
+                <h2>Categories</h2>
+                <ul class="list-group">
+                    <li class="list-group-item{% if not category %} active{% endif %}">
+                        <a href="{% url 'main:food_stand_list' %}">All</a>
+                    </li>
+                    {% for c in categories %}
+                        <li class="list-group-item{% if category == c %} active{% endif %}">
+                            <a href="?category={{ c.slug }}">{{ c.name }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col-md-9">
+                <div class="row">
+                    {% if foodstands %}
+                        {% for foodstand, primary_image in foodstands %}
+                            <div class="col-md-4 mb-3">
+                                <div class="card">
+                                    {% if primary_image %}
+                                        <img src="{{ primary_image.image.url }}"
+                                             alt="{{ foodstand.name }}"
+                                             class="card-img-top"/>
+                                    {% else %}
+                                        {% if foodstand.images.all %}
+                                            <img src="{{ foodstand.images.first.image.url }}"
+                                                 alt="{{ foodstand.name }}"
+                                                 class="card-img-top"/>
+                                        {% endif %}
+                                    {% endif %}
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ foodstand.name }}</h5>
+                                        <p class="card-text">{{ foodstand.description }}</p>
+                                        <a href="{% url 'main:food_stand_detail' pk=foodstand.pk slug=foodstand.slug %}"
+                                           class="btn btn-primary">View</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock content %}

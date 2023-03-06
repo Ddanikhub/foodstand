@@ -1,0 +1,42 @@
+{% extends "main/base.html" %} {% block content %}
+{% load static i18n %}
+
+<div id="map"></div>
+
+<script>
+    var imageUrl = "{% static 'images/logo/foodtruck.png' %}";
+
+</script>
+
+<script>
+    var foodStand = [
+        {% for foodstand, primary_image in foodstands %}
+            {
+                name: "{{ foodstand.name }}",
+                id: "{{ foodstand.id }}",
+                slug: "{{ foodstand.url }}",
+                description: "{{ foodstand.description }}",
+                address: "{{ foodstand.address }}",
+                latitude: {{ foodstand.latitude }},
+                longitude: {{ foodstand.longitude }},
+                {% if primary_image %}
+                image: "{{ primary_image.image.url }}",
+                {% else %}
+                {% if foodstand.images.all %}
+                image: "{{ foodstand.images.first.image.url }}",
+                {% endif %}
+                {% endif %}
+            },
+        {% endfor %}
+    ];
+
+</script>
+
+
+<script type="text/javascript" src="{% static 'js/mapMaker.js'%}"></script>
+<script
+	src="https://maps.googleapis.com/maps/api/js?key={{google_maps_api_key}}&callback=initMap&v=weekly"
+	defer
+></script>
+
+{% endblock content %}

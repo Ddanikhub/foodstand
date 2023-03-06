@@ -1,0 +1,31 @@
+{% extends "main/base.html" %}
+{% load static i18n %}
+{% block title %}
+  {% if category %}
+    {{ category.name }}
+  {% else %}
+  Create Category
+  {% endif %}
+{% endblock title %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<main class="flex-shrink-0 mt-n3">
+    <div class="container">
+<div class="card mb-5">
+    <div class="row g-0">
+        <div>
+            <div class="card-body">
+                <h1>Create Category</h1>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% crispy category %}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</main>
+{% endblock content %}

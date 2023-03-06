@@ -1,0 +1,130 @@
+{% extends "main/base.html" %}
+{% block title %}
+  {{ foodstand.name }}
+{% endblock title %}
+{% block content %}
+{% load static i18n %}
+
+  <script>
+    var imageUrl = "{% static 'images/logo/restaurant.png' %}";
+  </script>
+
+
+<script>
+  var foodStand =
+          {
+              name: "{{ foodstand.name }}",
+              id: "{{ foodstand.id }}",
+              slug: "{{ foodstand.slug }}",
+              description: "{{ foodstand.description }}",
+              address: "{{ foodstand.address }}",
+              latitude: {{ foodstand.latitude }},
+              longitude: {{ foodstand.longitude }},
+              {% if primary_image %}
+              image: "{{ primary_image.image.url }}",
+              {% else %}
+              image: "{{ foodstand.images.first.image.url }}",
+              {% endif %}
+          };
+          console.log(foodStand)
+
+</script>
+
+  <main class="flex-shrink-0 mt-n3">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+          {% for name, url in breadcrumb %}
+              <li class="breadcrumb-item {% if forloop.last %}active{% endif %}">
+                  {% if not forloop.last %}
+                      <a href="{{ url }}">{{ name }}</a>
+                  {% else %}
+                      {{ name }}
+                  {% endif %}
+              </li>
+          {% endfor %}
+      </ol>
+  </nav>
+    <div class="container mt-n3" >
+      <div class="row">
+        <div class="col-md-6" >
+          {% if foodstand.images.all %}
+            <div id="carouselExampleIndicators" class="carousel slide">
+              <div class="carousel-indicators">
+                {% for image in foodstand.images.all %}
+                {% if forloop.first %}
+                <button type="button"
+                        data-bs-target="#carouselExampleIndicators"
+                        data-bs-slide-to="{{ forloop.counter0 }}"
+                        class="active"
+                        aria-current="true">
+                </button>
+                {% else %}
+                <button type="button"
+                        data-bs-target="#carouselExampleIndicators"
+                        data-bs-slide-to="{{ forloop.counter0 }}"></button>
+                {% endif %}
+                {% endfor %}
+
+              </div>
+              <div class="carousel-inner">
+                {% for image in foodstand.images.all %}
+                  <div class="carousel-item{% if forloop.first %} active{% endif %}">
+                    <img src="{{ image.image.url }}"
+                         class="d-block w-100"
+                         alt="{{ foodstand.name }}"/>
+                  </div>
+                {% endfor %}
+              </div>
+              <button class="carousel-control-prev"
+                      type="button"
+                      data-bs-target="#carouselExampleIndicators"
+                      data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next"
+                      type="button"
+                      data-bs-target="#carouselExampleIndicators"
+                      data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+          {% endif %}
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+          <h1>{{ foodstand.name }}</h1>
+          <p>{{ foodstand.description }}</p>
+        </div>
+          <div class="row">
+          <p>
+            Categories:
+            {% for category in foodstand.categories.all %}
+              <a href="{% url 'main:category_detail' slug=category.slug %}">{{ category.name }}</a>
+              {% if not forloop.last %},{% endif %}
+            {% endfor %}
+          </p>
+        </div>
+          <div class="row">
+          {% if foodstand.owner == request.user %}
+            <a href="{% url 'main:food_stand_update' pk=foodstand.pk %}"
+               class="btn m-2 btn-primary">Edit My Stand</a>
+            <a href="{% url 'main:food_stand_images' pk=foodstand.pk %}"
+               class="btn m-2 btn-primary">Edit Images</a>
+            <a href="{% url 'main:category_create' %}" class="btn m-2 btn-primary">Create Category for Stand</a>
+            <a href="{% url 'main:update_location' id=foodstand.id %}" class="btn m-2 btn-primary">Update My Stand Location</a>
+          {% endif %}
+        </div>
+        </div>
+      </div>
+      <div class="row">
+        <h2>map</h2>
+        <div id="mapDetail"></div>
+      </div>
+    </div>
+  </main>
+  <script type="text/javascript" src="{% static 'js/mapDetail.js'%}"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key={{google_maps_api_key}}&callback=initMap&v=weekly"
+          defer></script>
+{% endblock content %}

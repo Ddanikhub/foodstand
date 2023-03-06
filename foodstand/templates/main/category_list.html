@@ -1,0 +1,47 @@
+{% extends "main/base.html" %}
+{% load static i18n %}
+{% block title %}
+  {% if category %}
+    {{ category.name }}
+  {% else %}
+    Elko Food Stand
+  {% endif %}
+{% endblock title %}
+{% block content %}
+<main class="flex-shrink-0 mt-n3">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-3">
+        <nav>
+          <ul class="nav flex-column">
+            {% for c in categories %}
+              <li class="nav-item">
+                <a class="nav-link" href="{{ c.get_absolute_url }}">{{ c.name }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        </nav>
+      </div>
+      {% for foodStand in foodStands %}
+        <div class="card mb-3">
+          <div class="row g-0">
+            <div class="col-md-2">
+              <img class="card-img-top"
+                   src="{{ foodStand.image.url }}"
+                   alt="Card image"
+                   height="300"
+                   width="400"/>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">{{ foodStand.name }}</h5>
+              <p class="card-text">{{ foodStand.description }}</p>
+              <a href="{{ foodStand.get_absolute_url }}" class="btn btn-primary">{{ foodStand.name }}</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </main>
+  {% endblock content %}

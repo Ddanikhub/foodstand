@@ -1,0 +1,47 @@
+{% extends "main/base.html" %}
+{% load crispy_forms_tags %}
+{% load static i18n %}
+{% block title %}
+    Create Food Stand
+{% endblock title %}
+{% block content %}
+    <main class="flex-shrink-0 mt-n3">
+        <div class="container mt-n3">
+            <div class="row">
+                <div class="col-md-6 offset-md-3">
+
+                        <div>
+                            <div class="card-body">
+                                <h1>Create a New Food Stand</h1>
+                                <div class="row">
+
+                                        <form method="post" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            {% crispy form %}
+                                            {% for field in form %}
+                                                {% if field.errors %}<div class="alert alert-danger">{{ field.errors|join:", " }}</div>{% endif %}
+                                            {% endfor %}
+                                        </form>
+
+                                    {% comment %} <div class="col-md-6">
+                                        <h2>Categories</h2>
+                                        <ul>
+                                            {% for category in categories %}
+                                                <li>{{ category.name }}</li>
+                                            {% empty %}
+                                                <li>No categories found.</li>
+                                            {% endfor %}
+                                        </ul>
+                                        <ul>
+                                            <a href="{% url 'main:category_create' %}" class="btn btn-link">Link</a>
+                                        </ul>
+                                    </div> {% endcomment %}
+                                </div>
+                            </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock content %}

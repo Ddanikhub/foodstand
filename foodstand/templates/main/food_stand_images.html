@@ -1,0 +1,48 @@
+{% extends "main/base.html" %}
+{% load crispy_forms_tags %}
+{% load static i18n %}
+{% block title %}
+    {{ foodstand.name }} Images
+{% endblock title %}
+{% block content %}
+    <div class="container">
+        <h1>{{ foodstand.name }} - Images</h1>
+        {% if images %}
+            <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 g-3">
+                {% for image in images %}
+                    <div class="col">
+                        <div class="card">
+                            <img src="{{ image.image.url }}" class="card-img-top" alt="image"/>
+                            <div class="card-body">
+                                <form method="post" class="d-inline">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="id" value="{{ image.id }}"/>
+                                    <button type="submit"
+                                            name="set_primary"
+                                            class="btn btn-primary mb-3{% if image.is_primary %} disabled{% endif %}">
+                                        {% if image.is_primary %}
+                                            Primary
+                                        {% else %}
+                                            Set as primary
+                                        {% endif %}
+                                    </button>
+                                </form>
+                                <form method="post" class="d-inline">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="id" value="{{ image.id }}"/>
+                                    <button type="submit" name="delete_image" class="btn btn-danger mb-3">Delete</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <form method="post" enctype="multipart/form-data" class="mt-5">
+            {% csrf_token %}
+
+            {% crispy form %}
+
+        </form>
+    </div>
+{% endblock content %}

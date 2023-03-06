@@ -1,0 +1,12 @@
+{% load static i18n %}
+<script>
+    var foodStand = {
+        {
+            data | safe
+        }
+    };
+</script>
+<div id="map"></div>
+<script type="text/javascript" src="{% static 'js/mapMaker.js'%}"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key={{google_maps_api_key}}&callback=initMap&v=weekly" defer>
+</script>

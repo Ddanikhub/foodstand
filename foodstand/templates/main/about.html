@@ -1,0 +1,29 @@
+{% extends "main/base.html" %}
+{% block title %}
+  About Us
+{% endblock title %}
+{% block content %}
+{% load static i18n %}
+    <main class="flex-shrink-0 mt-n3">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            {% for name, url in breadcrumb %}
+                <li class="breadcrumb-item {% if forloop.last %}active{% endif %}">
+                    {% if not forloop.last %}
+                        <a href="{{ url }}">{{ name }}</a>
+                    {% else %}
+                        {{ name }}
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ol>
+    </nav>
+        <div class="container">
+            <h1 class="mt-5">About Us</h1>
+            <p class="lead">This is the about page for our website.</p>
+            <p>
+                Use <a href="#">the sticky footer with a fixed navbar</a> if need be, too.
+            </p>
+        </div>
+    </main>
+{% endblock content %}

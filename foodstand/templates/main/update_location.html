@@ -1,0 +1,42 @@
+{% extends "main/base.html" %}
+{% block title %}
+    Update Location
+{% endblock title %}
+{% block content %}
+    {% load crispy_forms_tags %}
+    {% load static i18n %}
+    <main class="flex-shrink-0 mt-n3">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 mx-auto">
+                    <div class="card my-5">
+                        <div class="card-header">
+                            <h4 class="card-title">Update Location</h4>
+                        </div>
+                        <div class="card-body">
+                            <form method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                {{ form|crispy }}
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-primary" id="get-location-button">Get Current Location</button>
+                                    <button type="submit" class="btn btn-primary">Update</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script>
+        var getLocationButton = document.getElementById('get-location-button');
+        getLocationButton.addEventListener('click', function() {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var latitude = position.coords.latitude;
+                var longitude = position.coords.longitude;
+                document.getElementById('id_latitude').value = latitude;
+                document.getElementById('id_longitude').value = longitude;
+            });
+        });
+    </script>
+{% endblock content %}
