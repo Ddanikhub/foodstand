@@ -64,7 +64,9 @@ def food_stand_create(request):
                 img = Image.objects.create(image=image)
                 foodstand.images.add(img)
             messages.success(request, "Food Stand created successfully.")
-            return redirect("main:food_stand_detail", pk=foodstand.pk)
+            return redirect(
+                "main:food_stand_detail", pk=foodstand.pk, slug=foodstand.slug
+            )
     else:
         form = foodStandForm()
     return render(request, "main/food_stand_create.html", {"form": form})
