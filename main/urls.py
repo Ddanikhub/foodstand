@@ -19,21 +19,24 @@ urlpatterns = [
     ),
     path("food_stand/create/", views.food_stand_create, name="food_stand_create"),
     path(
-        "food_stand/<int:pk>/update/", views.food_stand_update, name="food_stand_update"
+        "food_stand/<int:pk>/<slug:slug>/update/",
+        views.food_stand_update,
+        name="food_stand_update",
+    ),
+    path(
+        "food_stand/<int:pk>/<slug:slug>/update-location/",
+        views.update_location,
+        name="update_location",
     ),
     # path('food_stand/<int:pk>/images/', views.food_stand_images, name='food_stand_images'),
     # path('food_stand/delete/<int:pk>/images/', views.delete_image, name='delete_image'),
     path("category/create/", views.category_create, name="category_create"),
     path("category/<slug:slug>/", views.category_detail, name="category_detail"),
     path(
-        "food_stand/<int:pk>/images/", views.food_stand_images, name="food_stand_images"
+        "food_stand/<int:pk>/<slug:slug>/images/",
+        views.food_stand_images,
+        name="food_stand_images",
     ),
     # path('food_stand/<int:pk>/images/<int:image_pk>/set_first/', views.set_first_image, name='set_first_image'),
-    path(
-        "food_stand/<int:id>/update-location/",
-        views.update_location,
-        name="update_location",
-    ),
-    #
     # path('categories/<int:pk>/', views.category_detail, name='category_detail'),
 ]

@@ -85,10 +85,10 @@ def category_create(request):
 
 
 @login_required
-def food_stand_update(request, pk):
-    foodstand = get_object_or_404(foodStand, pk=pk)
+def food_stand_update(request, pk, slug):
+    foodstand = get_object_or_404(foodStand, pk=pk, slug=slug)
     if foodstand.owner != request.user:
-        return redirect("main:food_stand_detail", pk=pk)
+        return redirect("main:food_stand_detail", pk=pk, slug=slug)
     if request.method == "POST":
         form = foodStandForm(request.POST, instance=foodstand)
         if form.is_valid():
@@ -97,7 +97,9 @@ def food_stand_update(request, pk):
                 img = Image.objects.create(image=image)
                 foodstand.images.add(img)
             messages.success(request, "Food Stand updated successfully.")
-            return redirect("main:food_stand_detail", pk=foodstand.pk)
+            return redirect(
+                "main:food_stand_detail", pk=foodstand.pk, slug=foodstand.slug
+            )
     else:
         form = foodStandForm(instance=foodstand)
     return render(
@@ -106,11 +108,11 @@ def food_stand_update(request, pk):
 
 
 @login_required
-def food_stand_images(request, pk):
-    foodstand = get_object_or_404(foodStand, pk=pk)
+def food_stand_images(request, pk, slug):
+    foodstand = get_object_or_404(foodStand, pk=pk, slug=slug)
     images = foodstand.images.all()
     if foodstand.owner != request.user:
-        return redirect("main:food_stand_detail", pk=pk)
+        return redirect("main:food_stand_detail", pk=pk, slug=slug)
     if request.method == "POST":
         form = ImageForm(request.POST, request.FILES)
         if "set_primary" in request.POST:
@@ -134,7 +136,7 @@ def food_stand_images(request, pk):
                     foodstand.images.add(img)
 
                 messages.success(request, "Images uploaded successfully.")
-            return redirect("main:food_stand_images", pk=pk)
+            return redirect("main:food_stand_images", pk=pk, slug=slug)
     else:
         form = ImageForm()
     context = {
@@ -187,13 +189,13 @@ def food_stand_list(request):
 
 
 @login_required
-def update_location(request, id):
-    food_stand = foodStand.objects.get(id=id)
+def update_location(request, pk, slug):
+    food_stand = foodStand.objects.get(pk=pk, slug=slug)
     if request.method == "POST":
         form = LocationUpdateForm(request.POST, instance=food_stand)
         if form.is_valid():
             form.save()
-            return redirect("main:food_stand_detail", pk=id)
+            return redirect("main:food_stand_detail", pk=pk, slug=slug)
     else:
         initial_data = {}
         latitude = request.GET.get("latitude")

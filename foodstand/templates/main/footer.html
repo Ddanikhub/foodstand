@@ -1,20 +1,17 @@
 <div>
   <ul class="nav justify-content-center">
     <li class="nav-item">
-      <a href="#" class="nav-link px-2">Home</a>
+      <a href="{% url "main:home" %}" class="nav-link px-2">Home</a>
     </li>
     <li class="nav-item">
-      <a href="#" class="nav-link px-2">Features</a>
+      <a href="{% url "main:food_stand_list" %}" class="nav-link px-2">Food Stands</a>
     </li>
     <li class="nav-item">
-      <a href="#" class="nav-link px-2">Pricing</a>
+      <a href="{% url "main:contact" %}" class="nav-link px-2">Contact US</a>
     </li>
     <li class="nav-item">
-      <a href="#" class="nav-link px-2">FAQs</a>
-    </li>
-    <li class="nav-item">
-      <a href="#" class="nav-link px-2">About</a>
+      <a href="{% url "main:about" %}" class="nav-link px-2">About</a>
     </li>
   </ul>
-  <p class="text-center">© 2023 Elk Mountain Corp. Build by Miner for Miners</p>
+  <p class="text-center">© 2023 Daniel G. Dorohov. Build by Miner for Miners</p>
 </div>

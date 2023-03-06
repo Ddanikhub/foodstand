@@ -4,12 +4,9 @@
 {% endblock title %}
 {% block content %}
 {% load static i18n %}
-
   <script>
     var imageUrl = "{% static 'images/logo/restaurant.png' %}";
   </script>
-
-
 <script>
   var foodStand =
           {
@@ -27,9 +24,7 @@
               {% endif %}
           };
           console.log(foodStand)
-
 </script>
-
   <main class="flex-shrink-0 mt-n3">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
@@ -108,12 +103,12 @@
         </div>
           <div class="row">
           {% if foodstand.owner == request.user %}
-            <a href="{% url 'main:food_stand_update' pk=foodstand.pk %}"
+            <a href="{% url 'main:food_stand_update' pk=foodstand.pk slug=foodstand.slug %}"
                class="btn m-2 btn-primary">Edit My Stand</a>
-            <a href="{% url 'main:food_stand_images' pk=foodstand.pk %}"
+            <a href="{% url 'main:food_stand_images' pk=foodstand.pk slug=foodstand.slug %}"
                class="btn m-2 btn-primary">Edit Images</a>
             <a href="{% url 'main:category_create' %}" class="btn m-2 btn-primary">Create Category for Stand</a>
-            <a href="{% url 'main:update_location' id=foodstand.id %}" class="btn m-2 btn-primary">Update My Stand Location</a>
+            <a href="{% url 'main:update_location' pk=foodstand.pk slug=foodstand.slug %}" class="btn m-2 btn-primary">Update My Stand Location</a>
           {% endif %}
         </div>
         </div>
