@@ -32,6 +32,7 @@ class foodStandForm(forms.ModelForm):
             "website",
             "categories",
             "nv_business_id",
+            "business_name",
         ]
 
     def __init__(self, *args, **kwargs):

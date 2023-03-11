@@ -31,6 +31,13 @@ class Category(models.Model):
 class Image(models.Model):
     image = models.ImageField(upload_to=user_directory_path)
     is_primary = models.BooleanField(default=False)
+    slug = models.SlugField(max_length=200, default="image-slug")
+    name = models.CharField(max_length=200, default="imagename")
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.id}"
