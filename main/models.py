@@ -41,6 +41,7 @@ class foodStand(models.Model):
     images = models.ManyToManyField(Image, related_name="foodstand")
     name = models.CharField(max_length=100)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    business_name = models.CharField(max_length=100)
     nv_business_id = models.CharField(max_length=20, blank=True, null=True)
     phone_number = models.CharField(max_length=20)
     description = models.TextField()

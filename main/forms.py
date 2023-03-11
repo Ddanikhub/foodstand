@@ -46,6 +46,7 @@ class foodStandForm(forms.ModelForm):
             ),
             FloatingField("name"),
             FloatingField("phone_number"),
+            FloatingField("business_name"),
             FloatingField("nv_business_id", required=True),
             FloatingField("description"),
             FloatingField("adress"),
