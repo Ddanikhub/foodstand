@@ -196,3 +196,4 @@ SPECTACULAR_SETTINGS["SERVERS"] = [  # noqa F405
 ]
 # Your stuff...
 # ------------------------------------------------------------------------------
+GOOGLE_MAPS_API_KEY = env("GOOGLE_MAPS_API_KEY")
