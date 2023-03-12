@@ -22,7 +22,7 @@ certificatesResolvers:
   letsencrypt:
     # https://docs.traefik.io/master/https/acme/#lets-encrypt
     acme:
-      email: "daniel-roy-greenfeld@example.com"
+      email: "ddorohov@gmail.com"
       storage: /etc/traefik/acme/acme.json
       # https://docs.traefik.io/master/https/acme/#httpchallenge
       httpChallenge:
@@ -31,7 +31,7 @@ certificatesResolvers:
 http:
   routers:
     web-secure-router:
-      rule: "Host(`elkofoodstand.com`) || Host(`elkofoodstand.com`)"
+      rule: "Host(`54.214.18.4`) || Host(`54.214.18.4`)"
       entryPoints:
         - web-secure
       middlewares:
@@ -42,7 +42,7 @@ http:
         certResolver: letsencrypt
 
     flower-secure-router:
-      rule: "Host(`elkofoodstand.com`)"
+      rule: "Host(`54.214.18.4`)"
       entryPoints:
         - flower
       service: flower
