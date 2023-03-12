@@ -31,7 +31,7 @@ certificatesResolvers:
 http:
   routers:
     web-secure-router:
-      rule: "Host(` ec2-54-214-18-4.us-west-2.compute.amazonaws.com`) || Host(` ec2-54-214-18-4.us-west-2.compute.amazonaws.com`)"
+      rule: "Host(`elkofoodstands.com`) || Host(`elkofoodstands.com`)"
       entryPoints:
         - web-secure
       middlewares:
@@ -42,7 +42,7 @@ http:
         certResolver: letsencrypt
 
     flower-secure-router:
-      rule: "Host(` ec2-54-214-18-4.us-west-2.compute.amazonaws.com`)"
+      rule: "Host(`elkofoodstands.com`)"
       entryPoints:
         - flower
       service: flower
