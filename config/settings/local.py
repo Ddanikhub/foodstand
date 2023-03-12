@@ -66,5 +66,3 @@ INSTALLED_APPS += ["django_extensions"]  # noqa F405
 CELERY_TASK_EAGER_PROPAGATES = True
 # Your stuff...
 # ------------------------------------------------------------------------------
-
-GOOGLE_MAPS_API_KEY = "AIzaSyA6AZYq8NMhlXE-l-1UDDQl7dCxWVOT77s"
